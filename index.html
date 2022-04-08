@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Buscador Cócteles</h1>
+
+    <!--Le paso una funcion de JS al formulario de html y el forumulario llama a la funcion cuando se hace click en el boton submit -input submit- -->
+    <form onsubmit="sendForm(event)">
+      <!--He puesto un id: porque neesito usurarlo en js-->
+      <input id="drink-name" type="text" name="name" value="" />
+      <input type="submit" value="Buscar" class="js-button" />
+      <input type="reset" value="Reset" />
+    </form>
+
+    <section>
+      <h2>Cócteles Favoritos</h2>
+      <ul></ul>
+      <div id="favorites"></div>
+    </section>
+    <section>
+      <h2>Listas</h2>
+
+      es para que se nos formen listas de cotles q vamos a crear desde js
+      <ul></ul>
+      <div id="results"></div>
+    </section>
+    <script src="main.js"></script>
+  </body>
+</html>
