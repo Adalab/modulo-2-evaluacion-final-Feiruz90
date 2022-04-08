@@ -5,15 +5,19 @@
 const DEFAULT_IMAGE =
   "https://via.placeholder.com/210x450/ffffff/666666/?text="; /* es la imagen que se usa cuando la bebida no tiene una imagen*/
 
-/* he definido una funcion para hacer la busqueda*/
+// Cargar el array del localStorage y mostrar todos los favoritos
+// const favorites = [];
+
+/* he definido una funcion para hacer la busqueda*/ /* onsumbit -> Llama a nuestra función desde un formulario*/
 function sendForm(event) {
   /* hemos evitado que se refesque la pagina ( hago que evite enviar una peticion al servidor*/
   event.preventDefault();
 
-  /* he creado un id en html para poder hacer js */
-  const element = document.querySelector("#results");
+  /* he creado variables para guardar en favoritos. */
+  const resultsUl = document.querySelector("#results");
+  const favoritesUl = document.querySelector("#favorites");
   const input = document.querySelector("#drink-name");
-  element.innerHTML = "";
+  resultsUl.innerHTML = "";
 
   /* he utilizado fetch para poner la url que nos han puesto en el ejercicio*/
   /* el ejemplo que he extraido ha sido de los apuntes de FETCH*/
@@ -34,27 +38,54 @@ function sendForm(event) {
     .then(function (data) {
       /* como pintar en el html  ( para mostrar el nombre, imagen)*/
       for (const drink of data.drinks) {
+        /* he creado la variable -li- para que pueda el usuario seleccionar tanto el texto como la imagen*/
+        const li = document.createElement("li");
         const img = document.createElement("img");
-        const h = document.createElement("h3");
         const t = document.createTextNode(drink.strDrink);
+        const h = document.createElement("h2");
+
+        /*Agrego un nuevo nodo al final de la lista de un elemento hijo de un elemento padre especificado.Si el hijo(Child) es una referencia(hace referencia) hacia un nodo existente en el documento actual, este es quitado del padre actual para ser puesto en el nodo padre nuevo. La clave está en si el (Child) es una referencia a un nodo existente en el documento.*/
+        h.appendChild(t);
+
+        /*dentro de li he metido el h2 que se encuentra definido arriba*/
+        li.appendChild(h);
+
+        /*dentro de li he metido img que se encuentra definido arriba*/
+        li.appendChild(img);
+
+        resultsUl.appendChild(li);
+
+        let imageUrl = "";
 
         /* he puesto una condocional para comprobar si las bebidad tienen una foto o no, y si tiene una foto se la asigno (img)*/
         if (drink.strDrinkThumb) {
-          /* este src viene del servidor el que estoy haciendo la peticion*/
-          img.src = drink.strDrinkThumb;
+          imageUrl = drink.strDrinkThumb;
         } else {
           /* pongo default_image es cuando no tiene bebida y esta declarada arriba*/
-          img.src = DEFAULT_IMAGE + drink.strDrink;
+          imageUrl = DEFAULT_IMAGE + drink.strDrink;
         }
 
-        /*Agrega un nuevo nodo al final de la lista de un elemento hijo de un elemento padre especificado.Si el hijo(Child) es una referencia(hace referencia) hacia un nodo existente en el documento actual, este es quitado del padre actual para ser puesto en el nodo padre nuevo. La clave está en si el (Child) es una referencia a un nodo existente en el documento.*/
-        h.appendChild(t);
+        img.src = imageUrl;
+        img.className = "drink-thumb";
 
-        /*dentro del elemento he metido el h2 que se encuentra definido arriba*/
-        element.appendChild(h);
-
-        /*dentro de element he metido img que se encuentra definido arriba*/
-        element.appendChild(img);
+        /*
+         * Esta función se ejecuta cuando queramos añadir un cóctel a favoritos
+         * onclick -> Llama a esta función cuando se haga click en algo
+         */
+        li.onclick = function () {
+          const favorite = { name: drink.strDrink, image: imageUrl };
+          // Creo una copia del nodo "li"
+          const liClone = li.cloneNode(true);
+          // Meto la copia dentro de la lista de favoritos
+          favoritesUl.appendChild(liClone);
+        };
       }
     });
 }
+
+// 1. Cargo un array desde el local storage (puede no existir)
+// const favorites = ...
+// 2. Añado el elemento favorite al array
+// favorites.push(favorite);
+// 2. Almacenar el array en localstorage
+// localStorage...
