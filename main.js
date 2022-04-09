@@ -10,7 +10,7 @@ const DEFAULT_IMAGE =
 
 /* he definido una funcion para hacer la busqueda*/ /* onsumbit -> Llama a nuestra función desde un formulario*/
 function sendForm(event) {
-  /* hemos evitado que se refesque la pagina ( hago que evite enviar una peticion al servidor*/
+  /* he  evitado que se refesque la pagina ( hago que evite enviar una peticion al servidor*/
   event.preventDefault();
 
   /* he creado variables para guardar en favoritos. */

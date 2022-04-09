@@ -12,23 +12,26 @@
 
     <!--Le paso una funcion de JS al formulario de html y el forumulario llama a la funcion cuando se hace click en el boton submit -input submit- -->
     <form onsubmit="sendForm(event)">
-      <!--He puesto un id: porque neesito usurarlo en js-->
-      <input id="drink-name" type="text" name="name" value="" />
-      <input type="submit" value="Buscar" class="js-button" />
-      <input type="reset" value="Reset" />
+      <div class="divclass">
+        <!--He puesto un id: porque neesito usurarlo en js-->
+        <input class="barra" id="drink-name" type="text" name="name" value="" />
+        <input class="buscar" type="submit" value="Buscar" class="js-button" />
+        <input class="reset" type="reset" value="Reset" />
+      </div>
     </form>
+    <div class="div2">
+      <section class="section1">
+        <h2 class="h2">Cócteles Favoritos</h2>
 
-    <section>
-      <h2 class="h2">Cócteles Favoritos</h2>
+        <ul id="favorites"></ul>
+      </section>
+      <section class="section2">
+        <h2 class="listas">Listas</h2>
 
-      <ul id="favorites"></ul>
-    </section>
-    <section>
-      <h2 class="listas">Listas</h2>
-
-      <ul></ul>
-      <ul id="results"></ul>
-    </section>
+        <ul></ul>
+        <ul id="results"></ul>
+      </section>
+    </div>
     <script src="main.js"></script>
   </body>
 </html>
