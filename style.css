@@ -10,7 +10,7 @@ body{
 
     background-color: rgb(143, 221, 143);
     font-family: Arial, Helvetica, sans-serif;
-    
+
 
     
 }
@@ -19,6 +19,8 @@ body{
 h1{
 
 color: black ;
+
+
 size: 50px;
 margin-top: 20px;
 margin-left: 10px;
@@ -32,6 +34,7 @@ margin-bottom: 20px;
     margin-top: 20px;
     margin-left: 10px;
     display: flex;
+   
   
     
 }
@@ -76,10 +79,13 @@ border-radius: 6px;
 
 
 .div2{
+
+   
     display: flex;
     flex-direction: row;
     justify-content:space-between;
     cursor: pointer;
+   
     
 
 
@@ -106,12 +112,41 @@ h2{
 
 
 .footer{
+        color: aliceblue;
+        
         position: fixed;
         z-index: 0;
         bottom: 0;
         font-size: 0.8rem;
         width: 100%;
         margin-bottom: 10px;
-        margin-left: 10px;
+        margin-left: 30px;
+       
+
 
 }
+
+.content_item1{
+
+    color: aliceblue;
+    text-decoration: none;
+  
+}
+
+.content_item2{
+
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.content_item3{
+
+    color: aliceblue;
+    text-decoration: none;
+}
+.content_item4{
+
+    color: aliceblue;
+    text-decoration: none;
+}
+
