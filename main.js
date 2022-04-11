@@ -5,12 +5,9 @@
 const DEFAULT_IMAGE =
   "https://via.placeholder.com/210x450/ffffff/666666/?text="; /* es la imagen que se usa cuando la bebida no tiene una imagen*/
 
-// Cargar el array del localStorage y mostrar todos los favoritos
-// const favorites = [];
-
 /* he definido una funcion para hacer la busqueda*/ /* onsumbit -> Llama a nuestra función desde un formulario*/
 function sendForm(event) {
-  /* he  evitado que se refesque la pagina ( hago que evite enviar una peticion al servidor*/
+  /* he  evitado que se refescre la pagina ( hago que evite enviar una peticion al servidor*/
   event.preventDefault();
 
   /* he creado variables para guardar en favoritos. */
@@ -36,27 +33,9 @@ function sendForm(event) {
 
     /* para que sirve data? son los datos que me ha devuelto el servidor*/
     .then(function (data) {
-      /* como pintar en el html  ( para mostrar el nombre, imagen)*/
+      /* como pintar en el html  ( para mostrar el nombre, imagen, ESTE BUCLE VA BEBIDA POR BEBIDA, ejemplo margarita 1, margarita 2... por lo que he puesto el li para el html( se encuentra escrito abajo en resultsUL.innerHTML)*/
       for (const drink of data.drinks) {
-        /* he creado la variable -li- para que pueda el usuario seleccionar tanto el texto como la imagen*/
-        const li = document.createElement("li");
-        const img = document.createElement("img");
-        const t = document.createTextNode(drink.strDrink);
-        const h = document.createElement("h2");
-
-        /*Agrego un nuevo nodo al final de la lista de un elemento hijo de un elemento padre especificado.Si el hijo(Child) es una referencia(hace referencia) hacia un nodo existente en el documento actual, este es quitado del padre actual para ser puesto en el nodo padre nuevo. La clave está en si el (Child) es una referencia a un nodo existente en el documento.*/
-        h.appendChild(t);
-
-        /*dentro de li he metido el h2 que se encuentra definido arriba*/
-        li.appendChild(h);
-
-        /*dentro de li he metido img que se encuentra definido arriba*/
-        li.appendChild(img);
-
-        resultsUl.appendChild(li);
-
         let imageUrl = "";
-
         /* he puesto una condocional para comprobar si las bebidad tienen una foto o no, y si tiene una foto se la asigno (img)*/
         if (drink.strDrinkThumb) {
           imageUrl = drink.strDrinkThumb;
@@ -65,27 +44,29 @@ function sendForm(event) {
           imageUrl = DEFAULT_IMAGE + drink.strDrink;
         }
 
-        img.src = imageUrl;
-        img.className = "drink-thumb";
+        /* He añadido despues del FOR DE ARRIBA  "oye traeme todos los li de todas las bebidas y he puesto un listener" + como se hace? añadiendo una clase a las listas*/
+        resultsUl.innerHTML += `
+          <li class="js-li">
+            <h2>${drink.strDrink}</h2>
+            <img class="imagen" src="${imageUrl}">
+          </li>
+        `;
+      }
 
-        /*
-         * Esta función se ejecuta cuando queramos añadir un cóctel a favoritos
-         * onclick -> Llama a esta función cuando se haga click en algo
-         */
-        li.onclick = function () {
-          const favorite = { name: drink.strDrink, image: imageUrl };
-          // Creo una copia del nodo "li"
-          const liClone = li.cloneNode(true);
+      // he añadido el queryselectorALL PARA COGER TODOS LOS LI QU HAY EN HTML Y DENTRO DEL FOR que se encuentra arriba
+      //Creo una variable "todolosli"
+      const todosLosLi = document.querySelectorAll(".js-li");
+
+      for (const cadaLi of todosLosLi) {
+        // he creado addeventlistener para todos los li  y cuando hago click  me ejecute esta funcion que he puesto abajo
+        cadaLi.addEventListener("click", function (event) {
+          // esta funcion ha cogido el li donde he hecho CLICK y lo clona y duplica y se guarda en la variable y en la lista de favoritos se añade la que esta abajo favoritesUl.appendChild(liClone);
+          const liClone = event.currentTarget.cloneNode(true);
           // Meto la copia dentro de la lista de favoritos
           favoritesUl.appendChild(liClone);
-        };
+
+          // estas dos LINEAS SIRVEN PARA : const liClone = event.currentTarget.cloneNode(true);       favoritesUl.appendChild(liClone);   cuando la usuaria hace click en una bebida hace que coga todo ese html y todo el li, lo coge lo duplica y se PONE EN LA LISTA DE FAVORITOS
+        });
       }
     });
 }
-
-// 1. Cargo un array desde el local storage (puede no existir)
-// const favorites = ...
-// 2. Añado el elemento favorite al array
-// favorites.push(favorite);
-// 2. Almacenar el array en localstorage
-// localStorage...
